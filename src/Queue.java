@@ -10,20 +10,21 @@ public class Queue {
         vector = new int[size];
         H = 0;
         T = 0;
+        System.out.println("thisislen"+vector.length);
     }
 
     public int enqueue(int input) { //insert
-        if (T == vector.length-1){
+        if (T == vector.length){
             return -404;
         } else {
             vector[T] = input;
-            return vector[T];
+            return vector[T++];
         }
     }
 
     public int dequeue() { //delete
-        if (H == vector.length){
-            return 504;
+        if (H == T){
+            return -504;
         } else {
             H++;
             return H;
@@ -32,6 +33,6 @@ public class Queue {
 
     @Override
     public String toString() {
-        return Arrays.toString(vector);
+        return Arrays.toString(vector).substring((H*3)+1, (T*3)+1);
     }
 }
