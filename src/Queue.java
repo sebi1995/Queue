@@ -2,6 +2,11 @@ import java.util.Arrays;
 
 public class Queue {
 
+    private static final String RED = "\033[0;91m";
+    private static final String BLUE = "\033[0;94m";
+    private static final String GREEN = "\033[0;32m";
+    private static final String RESET = "\033[0m";
+
     private int[] vector;
     private int H;//head - beginning
     private int T;//tail - end
@@ -10,7 +15,6 @@ public class Queue {
         vector = new int[size];
         H = 0;
         T = 0;
-        System.out.println("thisislen"+vector.length);
     }
 
     public int enqueue(int input) { //insert
@@ -31,8 +35,21 @@ public class Queue {
         }
     }
 
+    public int isEmpty(){
+        boolean empty = true;
+        int veclen = vector.length;
+        for (int i = 0; i < veclen; ++i) {
+            if (vector[i] != 0) empty = false;
+        }
+        return empty ? -604 : 0;
+    }
+
     @Override
     public String toString() {
-        return Arrays.toString(vector).substring((H*3)+1, (T*3)+1);
+        String array = Arrays.toString(vector);
+        array = array.replace("[", "");
+        array = array.replace("]", "");
+        array = array.replace(",", "");
+        return array;
     }
 }
