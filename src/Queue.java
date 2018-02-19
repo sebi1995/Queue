@@ -2,23 +2,20 @@ import java.util.Arrays;
 
 public class Queue {
 
-    private static final String RED = "\033[0;91m";
-    private static final String BLUE = "\033[0;94m";
-    private static final String GREEN = "\033[0;32m";
-    private static final String RESET = "\033[0m";
-
     private int[] vector;
     private int H;//head - beginning
     private int T;//tail - end
+    private StringBuilder qS;
 
     Queue(int size) {
         vector = new int[size];
+        qS = new StringBuilder();
         H = 0;
         T = 0;
     }
 
     public int enqueue(int input) { //insert
-        if (T == vector.length){
+        if (T == vector.length) {
             return -404;
         } else {
             vector[T] = input;
@@ -27,7 +24,7 @@ public class Queue {
     }
 
     public int dequeue() { //delete
-        if (H == T){
+        if (H == T) {
             return -504;
         } else {
             H++;
@@ -35,21 +32,22 @@ public class Queue {
         }
     }
 
-    public int isEmpty(){
-        boolean empty = true;
-        int veclen = vector.length;
-        for (int i = 0; i < veclen; ++i) {
-            if (vector[i] != 0) empty = false;
-        }
-        return empty ? -604 : 0;
+    public boolean isEmpty() {
+        for (int v : vector) if (v != 0) return false;
+        return true;
     }
 
     @Override
     public String toString() {
-        String array = Arrays.toString(vector);
-        array = array.replace("[", "");
-        array = array.replace("]", "");
-        array = array.replace(",", "");
-        return array;
+        qS.delete(0, qS.length());
+
+        if ((H - 1) >= 0) {
+            for (int i = 0; i < H; ++i) qS.append("\033[0;32m").append(vector[i]).append("\033[0m").append(" ");//green - reset
+            for (int i = H; i < vector.length; ++i) qS.append("\033[0;91m").append(vector[i]).append("\033[0m").append(" ");//red - reset
+        } else {
+            for (int aVector : vector) qS.append("\033[0;91m").append(aVector).append(" ");//red
+        }
+
+        return qS.toString();
     }
 }

@@ -1,6 +1,12 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+
+    private static final String RED = "\033[0;91m";
+    private static final String BLUE = "\033[0;94m";
+    private static final String RESET = "\033[0m";
+    private static final String GREEN = "\033[0;32m";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -8,7 +14,8 @@ public class Main {
         boolean programRunning = true;
         while (programRunning) {
             System.out.print("How big do you wish the queue to be today?\nQueue size: ");
-            int size = scanner.nextInt();
+            Integer size = scanner.nextInt();
+
             Queue queue = new Queue(size);
 
             boolean queueRunning = true;
@@ -25,8 +32,8 @@ public class Main {
                             System.out.println(queue.toString());
                             break;
                         case "-":
-                            if (queue.isEmpty() == -604){
-                                System.out.println("List is empty, add first!");
+                            if (queue.isEmpty()) {
+                                System.out.println(RED + "List is empty, add first!" + RESET);
                             } else {
                                 System.out.println(dequeue(queue));
                                 System.out.println(queue.toString());
@@ -40,38 +47,39 @@ public class Main {
                             queueRunning = false;
                             break;
                         case "h":
-                            System.out.println("+ <int arg>  => to enqueue numbers to the list.");
+                            System.out.println(BLUE + "+ <int arg>  => to enqueue numbers to the list.");
                             System.out.println("-            => to dequeue numbers from the list.");
                             System.out.println("r            => to start again with a new queue.");
-                            System.out.println("e            => to exit.");
+                            System.out.println("e            => to exit." + RESET);
                             break;
                         default:
                             System.out.println("Enter \"h\" for help.");
                             break;
                     }
                 } catch (NumberFormatException x) {
-                    System.out.println(input.substring(0, 1) + " " + "\"" + input.substring(2, input.length()) + "\" --: INVALID INPUT");
+                    System.out.println(RED + input.substring(0, 1) + " " + "\"" + input.substring(2, input.length()) + "\" --: INVALID INPUT" + RESET);
                 } catch (StringIndexOutOfBoundsException sioobe) {
-                    System.out.println("List is empty. Add first in order to dequeue.");
+                    System.out.println("Queue is empty. Add first in order to dequeue.");
                 }
             }
+
         }
     }
 
     private static String enqueue(Queue queue, int enQNum) {
         if (queue.enqueue(enQNum) == -404) {
-            return "There are no more positions to be used, come back tomorrow!";
+            return RED + "There are no more positions to be used, come back tomorrow!" + RESET;
         } else {
-            return "Number " + enQNum + " successfully added!";
+            return BLUE + enQNum + " successfully added!" + RESET;
         }
     }
 
     private static String dequeue(Queue queue) {
         int h = queue.dequeue();
         if (h == -504) {
-            return "Everyone has had their turn";
+            return RED + "Everyone has had their turn" + RESET;
         } else {
-            return "Person " + h + " has had their turn.";
+            return GREEN + h + " has had their turn." + RESET;
         }
     }
 }
