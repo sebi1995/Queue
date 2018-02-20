@@ -14,7 +14,16 @@ public class Main {
         boolean programRunning = true;
         while (programRunning) {
             System.out.print("How big do you wish the queue to be today?\nQueue size: ");
-            Integer size = scanner.nextInt();
+            Integer size = 0;
+
+            while (size == 0) {
+                try {
+                    size = scanner.nextInt();
+                } catch (InputMismatchException ime) {
+                    System.out.print("Invalid input, try again: ");
+                    scanner.next();
+                }
+            }
 
             Queue queue = new Queue(size);
 
